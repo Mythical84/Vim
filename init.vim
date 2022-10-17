@@ -13,7 +13,7 @@ Plug 'vim-airline/vim-airline'
 "Color scheme
 Plug 'joshdick/onedark.vim'
 "Autocomplete
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-lockfile && yarn build'}
 " Syntax checking
 Plug 'scrooloose/syntastic'
 
@@ -39,9 +39,14 @@ call plug#end()
 
 "Normal mode mappings
 nnoremap <C-n> :NERDTreeToggle<CR>
-
 " Go to terminal by pressing ctrl-j
 nnoremap <C-j> <Esc><C-w>ja
+
+" Go to file tree by pressing ctrl-h
+nnoremap <C-h> <C-w><C-h>
+
+" Return from the file tree by pressing ctrl-l
+nnoremap <C-l> <C-w><C-l>
 
 " Write and close the file
 nnoremap <C-q> :w<Enter>:qa<Enter>
@@ -60,20 +65,33 @@ tnoremap <Esc> <C-\><C-n><C-w>k
 " Visual mod mappings
 
 " Replace text withing a selected area
-vnoremap <expr> <C-r> 
+vnoremap <S-r> <esc> :call ReplaceText() <CR>
 
 function ReplaceText()
-	return "i"
+	
 endfunction
 
 "--Autocompletes for parenthesis, brackets, and quotations
 
 " Parenthesis
-inoremap ( ()<Left>
+noremap ( ()<Left>
 inoremap <expr> )  strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
 
 " Go to terminal by pressing ctrl-a
 inoremap <C-j> <Esc><C-w>ja
+
+" Custom commands
+
+" Create and setup a new tab
+command! -nargs=1 Newtab call s:tabnew(<f-args>)
+
+function! s:tabnew(file) 
+	tabnew file
+	split | term
+	res -15
+	NERDTreeToggle
+	wincmd l
+endfunction
 
 "Line numbers
 set number
@@ -93,7 +111,7 @@ autocmd VimEnter * wincmd w
 "Create a terminal below the main window and resize it
 set splitbelow
 autocmd TermOpen * setlocal nonumber norelativenumber
-"split | term
+"spit | term
 "res -15
 
 "Makes the window seperators thin

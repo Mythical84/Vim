@@ -18,8 +18,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-loc
 Plug 'scrooloose/syntastic'
 " Svelte syntax highlighting
 Plug 'evanleck/vim-svelte'
-" Vim command alias support
-Plug 'konfekt/vim-alias'
 
 "--CoC Language Plugins
 "Java
@@ -87,11 +85,14 @@ endfunction
 "--Autocompletes for parenthesis, brackets, and quotations
 
 " Parenthesis
-noremap ( ()<Left>
-inoremap <expr> )  strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
+inoremap ( ()<Left>
+inoremap <expr> ) strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
+inoremap <expr> <Bs> strpart(getline('.'), col('.')+1, 1) == ")" ? "\<Right>" : "\<Bs>"
 
 " Go to terminal by pressing ctrl-a
 inoremap <C-j> <Esc><C-w>ja
+
+" Non plugin specific configs
 
 "Line numbers
 set number
@@ -109,10 +110,10 @@ autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd w
 
 "Create a terminal below the main window and resize it
-set splitbelow
 autocmd TermOpen * setlocal nonumber norelativenumber
-"spit | term
-"res -15
+enew
+term
+bprevious
 
 "Makes the window seperators thin
 highlight VertSplit term=None cterm=None gui=None guifg=None guibg=None ctermfg=None ctermbg=None
@@ -168,15 +169,6 @@ if has("nvim-0.5.0") || has("patch-8.1.1564")
 else
   set signcolumn=yes
 endif
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1

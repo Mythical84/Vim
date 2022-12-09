@@ -1,23 +1,25 @@
 call plug#begin() 
 
-"Git client
+" Git client
 Plug 'tpope/vim-fugitive'
-"File tree
+" File icons
+" Plug 'ryanoasis/vim-devicons'
+" Color for the icons
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" File tree
 Plug 'scrooloose/nerdtree'
-"File icons
-Plug 'ryanoasis/vim-devicons'
-"Color for the icons
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-"Status bar
+" Status bar
 Plug 'vim-airline/vim-airline'
-"Color scheme
+" Color scheme
 Plug 'joshdick/onedark.vim'
-"Autocomplete
+" Autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-lockfile && yarn build'}
 " Syntax checking
 Plug 'scrooloose/syntastic'
 " Svelte syntax highlighting
-Plug 'evanleck/vim-svelte'
+Plug 'burner/vim-svelte'
+" Parenthesis autocomplete
+Plug 'jiangmiao/auto-pairs'
 
 "--CoC Language Plugins
 "Java
@@ -33,7 +35,7 @@ Plug 'josa42/coc-sh'
 " Rust
 Plug 'neoclide/coc-rls'
 " Prettier
-Plug 'neoclide/coc-rls'
+Plug 'neoclide/coc-prettier'
 " Json
 Plug 'neoclide/coc-json'
 " Svelte
@@ -42,7 +44,7 @@ Plug 'coc-extensions/coc-svelte'
 call plug#end()
 
 "Normal mode mappings
-nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <C-n> :NERDTreeToggle<Enter><C-l>
 " Go to terminal by pressing ctrl-j
 nnoremap <C-j> <Esc><C-w>ja
 
@@ -60,9 +62,12 @@ nnoremap <C-Right> :bnext<cr>
 nnoremap <C-Left> :bprevious<cr>
 
 "Terminal mode mappings
-tnoremap <Esc> <C-\><C-n><C-w>k
+tnoremap <Esc> <C-\><C-n>
 
-" Visual mod mappings
+tnoremap <C-Left> <Esc> :bprevious
+tnoremap <C-Left> <Esc> :bnext
+
+" Visual mode mappings
 
 " Replace text withing a selected area
 vnoremap <S-r> <esc> :call ReplaceText() <CR>
@@ -76,18 +81,11 @@ endfunction
 :command! Bq execute QuitBuffer()
 
 function QuitBuffer()
-	:bd
+	:bd!
 	:bprevious
 	:NERDTreeToggle
 	:wincmd l
 endfunction
-
-"--Autocompletes for parenthesis, brackets, and quotations
-
-" Parenthesis
-inoremap ( ()<Left>
-inoremap <expr> ) strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
-inoremap <expr> <Bs> strpart(getline('.'), col('.')+1, 1) == ")" ? "\<Right>" : "\<Bs>"
 
 " Go to terminal by pressing ctrl-a
 inoremap <C-j> <Esc><C-w>ja
@@ -124,6 +122,18 @@ highlight EndOfBuffer ctermfg=black ctermbg=black
 "Global status bar
 set laststatus=3
 
+"enable color scheme
+syntax on
+colorscheme onedark
+
+"Enable full colorpallete
+set tgc
+
+" Enable code folding
+:set foldenable
+
+"--Begin Plugin Config-- "
+
 " --Begin NERDTree Config-- "
 
 "Makes folder icons look better
@@ -133,13 +143,6 @@ let g:WebDevIconsDisableDefaultFolderSymbolColorFromNERDTreeDir = 1
 let NERDTreeShowHidden=1
 
 " --End NERDTree Config-- "
-
-"enable color scheme
-syntax on
-colorscheme onedark
-
-"Enable full colorpallete
-set tgc
 
 " --Begin CoC config-- "
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
@@ -160,15 +163,6 @@ set updatetime=300
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-if has("nvim-0.5.0") || has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -242,4 +236,4 @@ let g:airline#extensions#syntastic#stl_format_warn = 1
 
 " --End airline config-- "
 
-"--End Startup Logic--"
+" --End Startup Logic--"

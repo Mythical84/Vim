@@ -3,9 +3,9 @@ call plug#begin()
 " Git client
 Plug 'tpope/vim-fugitive'
 " File icons
-" Plug 'ryanoasis/vim-devicons'
+Plug 'ryanoasis/vim-devicons'
 " Color for the icons
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " File tree
 Plug 'scrooloose/nerdtree'
 " Status bar
@@ -18,8 +18,20 @@ Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-loc
 Plug 'scrooloose/syntastic'
 " Svelte syntax highlighting
 Plug 'burner/vim-svelte'
+" Javascript syntax highlighting
+Plug 'pangloss/vim-javascript'
+" Typescript syntax highlighting
+Plug 'HerringtonDarkholme/yats.vim'
 " Parenthesis autocomplete
 Plug 'jiangmiao/auto-pairs'
+" Markdown syntax support
+Plug 'plasticboy/vim-markdown'
+" Markdown preview
+Plug 'suan/vim-instant-markdown'
+" Prettier
+Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+" Set filetype based on location in file (Useful for svelte)
+
 
 "--CoC Language Plugins
 "Java
@@ -39,20 +51,14 @@ Plug 'neoclide/coc-prettier'
 " Json
 Plug 'neoclide/coc-json'
 " Svelte
-Plug 'coc-extensions/coc-svelte'
+Plug 'codechips/coc-svelte', {'do': 'npm install'}
+" Python
+Plug 'fannheyward/coc-pyright'
 
 call plug#end()
 
 "Normal mode mappings
 nnoremap <C-n> :NERDTreeToggle<Enter><C-l>
-" Go to terminal by pressing ctrl-j
-nnoremap <C-j> <Esc><C-w>ja
-
-" Go to file tree by pressing ctrl-h
-nnoremap <C-h> <C-w><C-h>
-
-" Return from the file tree by pressing ctrl-l
-nnoremap <C-l> <C-w><C-l>
 
 " Write and close the file
 nnoremap <C-q> :w<Enter>:qa<Enter>
@@ -236,4 +242,33 @@ let g:airline#extensions#syntastic#stl_format_warn = 1
 
 " --End airline config-- "
 
-" --End Startup Logic--"
+" --Start prettier config-- "
+
+let g:prettier#quickfix_enabled = 0
+let g:prettier#autoformat_require_pragma = 0
+au BufWritePre *.css,*.svelte,*.pcss,*.html,*.ts,*.js,*.json PrettierAsync
+
+" --End prettier config-- "
+
+" --Start context filetype config -- "
+
+if !exists('g:context_filetype#same_filetypes')
+  let g:context_filetype#filetypes = {}
+endif
+
+let g:context_filetype#filetypes.svelte =
+\ [
+\   {'filetype' : 'javascript', 'start' : '<script>', 'end' : '</script>'},
+\   {
+\     'filetype': 'typescript',
+\     'start': '<script\%( [^>]*\)\? \%(ts\|lang="\%(ts\|typescript\)"\)\%( [^>]*\)\?>',
+\     'end': '',
+\   },
+\   {'filetype' : 'css', 'start' : '<style \?.*>', 'end' : '</style>'},
+\ ]
+
+let g:ft = ''
+
+" --End context filetype config -- " 
+
+" --End Startup Logic-- "

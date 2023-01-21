@@ -1,0 +1,9 @@
+{
+  "diagnostic.messageTarget": "echo",
+  "signature.target": "echo",
+  "coc.preferences.hoverTarget": "echo",
+  "javascript.suggestionActions.enabled": true,
+  "typescript.suggestionActions.enabled": true,
+  "prettier.printWidth": 120,
+  "prettier.singleQuote": true
+}

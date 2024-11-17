@@ -11,7 +11,9 @@ require("lazy").setup({
 	'scrooloose/syntastic', -- Syntax Checking
 	'neoclide/coc.nvim', -- Auto complete code
 	'raimondi/delimitmate', -- Auto complete quotes and parenthesis
-	'myusuf3/numbers.vim' -- Change line numbers based on mode 
+	'myusuf3/numbers.vim', -- Change line numbers based on mode 
+	'evanleck/vim-svelte', -- Highlight support for svelte
+	'qnighy/lalrpop.vim', -- Syntax highlighting for lalrpop
 })
 
 -- plugin configs
@@ -29,6 +31,14 @@ vim.opt.shiftwidth = 2
 -- set colorscheme
 vim.cmd.colorscheme('onedark')
 vim.cmd('highlight LineNr ctermfg=grey')
+
+-- create a terminal buffer
+vim.cmd([[
+	autocmd TermOpen * setlocal nonumber norelativenumber
+	enew
+	term
+	bp
+]])
 
 -- custom quit command
 vim.api.nvim_create_user_command("Q", function(opts)
@@ -84,12 +94,11 @@ function swapTerm()
 	end
 end
 
--- create a terminal
+-- open the terminal
 function term()
 	vim.cmd([[
-		autocmd TermOpen * setlocal nonumber norelativenumber
 		split
-		term
 		resize -10
+		buffer 2
 	]])
 end

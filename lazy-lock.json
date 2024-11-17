@@ -2,13 +2,16 @@
   "coc.nvim": { "branch": "master", "commit": "2ec3166653f76acd42b0d9f62161c4db2673c204" },
   "csv.vim": { "branch": "master", "commit": "962f88787ec6873eba1c7dbbd81d2723f1ee3c4b" },
   "delimitmate": { "branch": "master", "commit": "537a1da0fa5eeb88640425c37e545af933c56e1b" },
+  "lalrpop.vim": { "branch": "master", "commit": "7073eec8efdeff37cacd4bca378c28dad02c3c14" },
   "lazy.nvim": { "branch": "main", "commit": "3f13f080434ac942b150679223d54f5ca91e0d52" },
   "nerdtree": { "branch": "master", "commit": "f3a4d8eaa8ac10305e3d53851c976756ea9dc8e8" },
   "numbers.vim": { "branch": "master", "commit": "1867e76e819db182a4fb71f48f4bd36a5e2c6b6e" },
   "onedark.vim": { "branch": "main", "commit": "57b77747694ea5676c3ca0eeaf9567dc499730c0" },
+  "render-markdown.nvim": { "branch": "main", "commit": "629b5f7dc053b73cd753e4ceb830a45f86f9b3da" },
   "syntastic": { "branch": "master", "commit": "8d5e37c29cf5952fbf300b9230bffe424c61a488" },
   "vim-airline": { "branch": "master", "commit": "ff0f9a45a5d81d2c8aa67601c264b18c4fe26b15" },
   "vim-fugitive": { "branch": "master", "commit": "dac8e5c2d85926df92672bf2afb4fc48656d96c7" },
   "vim-gitgutter": { "branch": "main", "commit": "67ef116100b40f9ca128196504a2e0bc0a2753b0" },
-  "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" }
+  "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" },
+  "vim-svelte": { "branch": "main", "commit": "0e93ec53c3667753237282926fec626785622c1c" }
 }

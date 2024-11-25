@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+require('lazy_install.lua')
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	'scrooloose/nerdtree', -- File tree
@@ -9,7 +10,7 @@ require("lazy").setup({
 	'joshdick/onedark.vim', -- Color scheme
 	'tpope/vim-surround', -- Automatically change or add quotes or parenthesis
 	'scrooloose/syntastic', -- Syntax Checking
-	'neoclide/coc.nvim', -- Auto complete code
+	{'neoclide/coc.nvim', branch='release', build='npm ci'}, -- Auto complete code
 	'raimondi/delimitmate', -- Auto complete quotes and parenthesis
 	'myusuf3/numbers.vim', -- Change line numbers based on mode 
 	'evanleck/vim-svelte', -- Highlight support for svelte
